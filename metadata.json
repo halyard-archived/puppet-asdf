@@ -1,0 +1,24 @@
+{
+  "name": "halyard-asdf",
+  "version": "0.0.1",
+  "author": "Les Aker",
+  "license": "MIT",
+  "summary": "Configure asdf",
+  "source": "https://github.com/halyard/puppet-asdf",
+  "project_page": "https://github.com/halyard/puppet-asdf",
+  "issues_url": "https://github.com/halyard/puppet-asdf/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": "1.5.x"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Darwin",
+      "operatingsystemmajrelease": [
+        "16"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+require 'json'
+
+JSON.parse(File.read('metadata.json'))['dependencies'].each do |dep|
+  repo_org, repo_name = dep['name'].split('/')
+  prefix = repo_org == 'puppetlabs' ? 'puppetlabs' : 'puppet'
+  repo_name = prefix + '-' + repo_name
+  repo_slug = [repo_org, repo_name].join('/')
+  version = dep['version_requirement'].sub(/\.x/, '')
+
+  item do
+    name "puppet-sudoers::#{repo_name}"
+
+    expected do
+      github_tag
+      repo repo_slug
+      regex /^(\d+\.\d+)\.\d+$/
+      filter /^\d+\.\d+.\d+$/
+    end
+
+    actual do
+      static
+      set version
+    end
+  end
+end
+
+item do
+  name 'puppet-asdf::gems'
+
+  expected do
+    static
+    set 'green'
+  end
+
+  actual do
+    gemnasium
+    slug 'halyard/puppet-asdf'
+  end
+end

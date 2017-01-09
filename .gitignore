@@ -1,0 +1,10 @@
+Gemfile.lock
+/.bundle
+/.ruby-version
+/spec/fixtures/.librarian
+/spec/fixtures/.tmp
+/spec/fixtures/Puppetfile.lock
+/spec/fixtures/modules/boxen/
+/spec/fixtures/modules/stdlib/
+/spec/fixtures/vendor
+pkg/
