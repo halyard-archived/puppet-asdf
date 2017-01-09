@@ -9,7 +9,7 @@ class asdf (
   $repo = 'https://github.com/asdf-vm/asdf'
 ) {
   vcsrepo { $path:
-    ensure   => present,
+    ensure   => latest,
     provider => git,
     source   => $repo,
     owner    => $owner,
