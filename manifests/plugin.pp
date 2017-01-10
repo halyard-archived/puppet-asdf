@@ -27,7 +27,7 @@ define asdf::plugin (
     }
     if $ensure == 'latest' {
       exec { "${bin} plugin-update ${_shortname}":
-        require => Exec["./asdf plugin-add ${_shortname} ${repo}"]
+        require => Exec["${bin} plugin-add ${_shortname} ${repo}"]
       }
     }
   }
