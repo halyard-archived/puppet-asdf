@@ -5,27 +5,29 @@ define asdf::plugin (
   String[1] $repo = $title,
 ) {
   if $shortname == undef {
-    $shortname = split($repo, '-')[-1]
+    $_shortname = split($repo, '-')[-1]
+  } else {
+    $_shortname = $shortname
   }
-  $path = "${asdf::path}/plugins/${shortname}"
+  $path = "${asdf::path}/plugins/${_shortname}"
+  $bin = "${asdf::path}/bin/asdf"
 
   Exec {
-    cwd   => "${asdf::path}/bin",
     user  => $asdf::owner,
     group => $asdf::group
   }
 
   if $ensure == 'absent' {
-    exec { "./asdf plugin-remove ${shortname} ${repo}":
+    exec { "${bin} plugin-remove ${_shortname} ${repo}":
       onlyif => "test -d ${path}"
     }
   } else {
-    exec { "./asdf plugin-add ${shortname} ${repo}":
+    exec { "${bin} plugin-add ${_shortname} ${repo}":
       creates => $path
     }
     if $ensure == 'latest' {
-      exec { "./asdf plugin-update ${shortname}":
-        require => Exec["./asdf plugin-add ${shortname} ${repo}"]
+      exec { "${bin} plugin-update ${_shortname}":
+        require => Exec["./asdf plugin-add ${_shortname} ${repo}"]
       }
     }
   }
