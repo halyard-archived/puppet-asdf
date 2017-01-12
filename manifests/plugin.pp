@@ -18,6 +18,6 @@ define asdf::plugin (
     source   => $repo,
     owner    => $asdf::owner,
     group    => $asdf::group,
-    require  => $asdf::path
+    require  => Vcsrepo[$asdf::path]
   }
 }
