@@ -15,4 +15,21 @@ class asdf (
     owner    => $owner,
     group    => $group
   }
+
+  $packages = [
+    'automake',
+    'autoconf',
+    'openssl',
+    'libyaml',
+    'readline',
+    'libxslt',
+    'libtool',
+    'unixodbc'
+  ]
+
+  package { $packages:
+    ensure   => latest,
+    provider => brew,
+    before   => Vcsrepo[$path]
+  }
 }

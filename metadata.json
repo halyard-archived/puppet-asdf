@@ -11,6 +11,10 @@
     {
       "name": "puppetlabs/vcsrepo",
       "version_requirement": "1.5.x"
+    },
+    {
+      "name": "halyard/homebrew",
+      "version_requirement": "3.0.x"
     }
   ],
   "operatingsystem_support": [
