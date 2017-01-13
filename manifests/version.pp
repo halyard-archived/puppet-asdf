@@ -10,4 +10,19 @@ define asdf::version (
     user  => $asdf::owner,
     group => $asdf::group
   }
+
+  $bin = "${asdf::path}/bin/asdf"
+
+  $version_array.each |version| {
+    if $ensure == 'present' {
+      exec { "${bin} install ${plugin} ${version}":
+        unless  => "${bin} list ${plugin} | grep ${version}",
+        require => Asdf::Plugin[$plugin]
+      }
+    } else {
+      exec { "${bin} uninstall ${plugin} ${version}":
+        onlyif => "${bin} list ${plugin} | grep ${version}"
+      }
+    }
+  }
 }

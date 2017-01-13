@@ -7,7 +7,8 @@ class asdf (
   String[1] $owner = $facts['id'],
   String[1] $group = $facts['gid'],
   String[1] $repo = 'https://github.com/asdf-vm/asdf',
-  Hash[String, Hash] $plugins = {}
+  Hash[String, Hash] $plugins = {},
+  Hash[String, Hash] $versions = {}
 ) {
   vcsrepo { $path:
     ensure   => latest,
@@ -35,4 +36,5 @@ class asdf (
   }
 
   create_resources(asdf::plugin, $plugins)
+  create_resources(asdf::version, $versions)
 }

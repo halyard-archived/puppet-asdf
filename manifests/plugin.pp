@@ -10,14 +10,22 @@ define asdf::plugin (
     $_shortname = $shortname
   }
 
-  $path = "${asdf::path}/plugins/${_shortname}"
+  $plugin_path = "${asdf::path}/plugins/${_shortname}"
+  $version_path = "${asdf::path}/installs/${_shortname}"
 
-  vcsrepo { $path:
+  vcsrepo { $plugin_path:
     ensure   => $ensure,
     provider => git,
     source   => $repo,
     owner    => $asdf::owner,
     group    => $asdf::group,
     require  => Vcsrepo[$asdf::path]
+  }
+
+  if $ensure == 'absent' {
+    file { $version_path:
+      ensure => absent,
+      force  => true
+    }
   }
 }
