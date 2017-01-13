@@ -3,10 +3,11 @@
 # Configure asdf
 
 class asdf (
-  $path = '/opt/asdf',
-  $owner = $facts['id'],
-  $group = $facts['gid'],
-  $repo = 'https://github.com/asdf-vm/asdf'
+  String[1] $path = '/opt/asdf',
+  String[1] $owner = $facts['id'],
+  String[1] $group = $facts['gid'],
+  String[1] $repo = 'https://github.com/asdf-vm/asdf',
+  Hash[String, Hash] $plugins = {}
 ) {
   vcsrepo { $path:
     ensure   => latest,
@@ -32,4 +33,6 @@ class asdf (
     provider => brew,
     before   => Vcsrepo[$path]
   }
+
+  create_resources(asdf::plugin, $plugins)
 }
