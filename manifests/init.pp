@@ -29,7 +29,7 @@ class asdf (
   ]
 
   package { $packages:
-    ensure   => latest,
+    ensure   => present,
     provider => brew,
     before   => Vcsrepo[$path]
   }
