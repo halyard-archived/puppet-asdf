@@ -3,7 +3,7 @@ define asdf::plugin (
   String[1] $repo,
   Enum['present', 'absent', 'latest'] $ensure = 'latest',
   String[1] $shortname = $title,
-  Array[String[1]] $versions = []
+  Variant[Undef, Array[String[1]]] $versions = undef
 ) {
   if $shortname == undef {
     $_shortname = split($repo, '-')[-1]
@@ -29,8 +29,10 @@ define asdf::plugin (
       force  => true
     }
   } else {
-    Asdf::Version { $shortname:
-      versions => $versions
+    if $versions {
+      Asdf::Version { $shortname:
+        versions => $versions
+      }
     }
   }
 }
