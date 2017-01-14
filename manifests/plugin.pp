@@ -1,8 +1,8 @@
 # Define plugin type for asdf
 define asdf::plugin (
+  String[1] $repo,
   Enum['present', 'absent', 'latest'] $ensure = 'latest',
-  Variant[String[1], Undef] $shortname = undef,
-  String[1] $repo = $title,
+  String[1] $shortname = $title,
 ) {
   if $shortname == undef {
     $_shortname = split($repo, '-')[-1]
