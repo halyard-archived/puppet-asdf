@@ -7,8 +7,8 @@ class asdf (
   String[1] $owner = $facts['id'],
   String[1] $group = $facts['gid'],
   String[1] $repo = 'https://github.com/asdf-vm/asdf',
-  Hash[String, Hash] $plugins = {},
-  Hash[String, Hash] $versions = {}
+  Hash[String[1], Hash] $plugins = {},
+  Hash[String[1], Hash] $versions = {}
 ) {
   vcsrepo { $path:
     ensure   => latest,
@@ -35,6 +35,13 @@ class asdf (
     before   => Vcsrepo[$path]
   }
 
+  $plugins.each |String[1] $plugin, Hash $plugin_data| {
+    if has_key($plugin_data, 'versions') {
+      Asdf::Version { $plugin:
+        versions => $plugin_data['versions']
+      }
+    }
+  }
+
   create_resources(asdf::plugin, $plugins)
-  create_resources(asdf::version, $versions)
 }

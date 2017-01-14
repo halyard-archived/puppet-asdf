@@ -28,11 +28,5 @@ define asdf::plugin (
       ensure => absent,
       force  => true
     }
-  } else {
-    if $versions {
-      Asdf::Version { $shortname:
-        versions => $versions
-      }
-    }
   }
 }
