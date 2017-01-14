@@ -13,7 +13,7 @@ define asdf::version (
 
   $bin = "${asdf::path}/bin/asdf"
 
-  $version_array.each |String version| {
+  $version_array.each |String $version| {
     if $ensure == 'present' {
       exec { "${bin} install ${plugin} ${version}":
         unless  => "${bin} list ${plugin} | grep ${version}",
