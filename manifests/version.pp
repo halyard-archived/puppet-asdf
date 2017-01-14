@@ -6,22 +6,23 @@ define asdf::version (
 ) {
   $version_array = any2array($versions)
 
-  Exec {
-    user  => $asdf::owner,
-    group => $asdf::group
-  }
-
   $bin = "${asdf::path}/bin/asdf"
 
   $version_array.each |String $version| {
     if $ensure == 'present' {
       exec { "${bin} install ${plugin} ${version}":
-        unless  => "${bin} list ${plugin} | grep ${version}",
-        require => Asdf::Plugin[$plugin]
+        unless      => "${bin} list ${plugin} | grep ${version}",
+        user        => $asdf::owner,
+        group       => $asdf::group,
+        environment => ["HOME=/tmp"],
+        timeout     => 0,
+        require     => Asdf::Plugin[$plugin]
       }
     } else {
       exec { "${bin} uninstall ${plugin} ${version}":
-        onlyif => "${bin} list ${plugin} | grep ${version}"
+        onlyif => "${bin} list ${plugin} | grep ${version}",
+        user   => $asdf::owner,
+        group  => $asdf::group
       }
     }
   }
