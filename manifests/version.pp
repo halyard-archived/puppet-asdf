@@ -3,8 +3,15 @@ define asdf::version (
   Variant[String[1], Array[String[1], 1]] $versions,
   Enum['present', 'absent'] $ensure = 'present',
   String[1] $plugin = $title,
+  Variant[String[1], Undef] $global = undef
 ) {
   $version_array = any2array($versions)
+
+  if $global {
+    $global_version = $global
+  } else {
+    $global_version = sort($version_array)[-1]
+  }
 
   $bin = "${asdf::path}/bin/asdf"
 
@@ -17,6 +24,11 @@ define asdf::version (
         environment => ["HOME=/tmp"],
         timeout     => 0,
         require     => Asdf::Plugin[$plugin]
+      } ->
+      exec { "${bin} global ${plugin} ${global_version}":
+        unless => "${bin} current ${plugin} | grep ${global_version}",
+        user   => $asdf::owner,
+        group  => $asdf::group
       }
     } else {
       exec { "${bin} uninstall ${plugin} ${version}":
