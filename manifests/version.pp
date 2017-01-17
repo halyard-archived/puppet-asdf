@@ -24,11 +24,6 @@ define asdf::version (
         environment => ["HOME=/tmp"],
         timeout     => 0,
         require     => Asdf::Plugin[$plugin]
-      } ->
-      exec { "${bin} global ${plugin} ${global_version}":
-        unless => "${bin} current ${plugin} | grep ${global_version}",
-        user   => $asdf::owner,
-        group  => $asdf::group
       }
     } else {
       exec { "${bin} uninstall ${plugin} ${version}":
@@ -37,5 +32,12 @@ define asdf::version (
         group  => $asdf::group
       }
     }
+  }
+
+  exec { "${bin} global ${plugin} ${global_version}":
+    unless  => "${bin} current ${plugin} | grep ${global_version}",
+    user    => $asdf::owner,
+    group   => $asdf::group,
+    require => Exec["${bin} install ${plugin} ${global_version}"]
   }
 }
