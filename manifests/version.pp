@@ -21,7 +21,7 @@ define asdf::version (
         unless      => "${bin} list ${plugin} | grep ${version}",
         user        => $asdf::owner,
         group       => $asdf::group,
-        environment => ["HOME=/tmp"],
+        environment => ['HOME=/tmp'],
         timeout     => 0,
         require     => Asdf::Plugin[$plugin]
       }
