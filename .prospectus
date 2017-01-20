@@ -8,7 +8,7 @@ JSON.parse(File.read('metadata.json'))['dependencies'].each do |dep|
   version = dep['version_requirement'].sub(/\.x/, '')
 
   item do
-    name "puppet-sudoers::#{repo_name}"
+    name "puppet-asdf::#{repo_name}"
 
     expected do
       github_tag
