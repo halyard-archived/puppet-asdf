@@ -1,39 +1,29 @@
 require 'json'
+my_json = JSON.parse(File.read('metadata.json'))
+my_slug = my_json['source'].split('/').pop(2).join('/')
 
-JSON.parse(File.read('metadata.json'))['dependencies'].each do |dep|
-  repo_org, repo_name = dep['name'].split('/')
-  prefix = repo_org == 'puppetlabs' ? 'puppetlabs' : 'puppet'
-  repo_name = prefix + '-' + repo_name
-  repo_slug = [repo_org, repo_name].join('/')
-  version = dep['version_requirement'].sub(/\.x/, '')
-
-  item do
-    name "puppet-asdf::#{repo_name}"
-
-    expected do
-      github_tag
-      repo repo_slug
-      regex /^(\d+\.\d+)\.\d+$/
-      filter /^\d+\.\d+.\d+$/
-    end
-
-    actual do
-      static
-      set version
-    end
-  end
-end
+Prospectus.extra_dep('file', 'prospectus_puppet')
+Prospectus.extra_dep('file', 'prospectus_circleci')
 
 item do
-  name 'puppet-asdf::gems'
+  noop
 
-  expected do
-    static
-    set 'green'
+  deps do
+    item do
+      name 'gems'
+
+      expected do
+        static
+        set 'green'
+      end
+
+      actual do
+        gemnasium
+        slug my_slug
+      end
+    end
   end
 
-  actual do
-    gemnasium
-    slug 'halyard/puppet-asdf'
-  end
+  extend ProspectusCircleci::Build.new(my_slug)
+  extend ProspectusPuppet::Deps
 end
