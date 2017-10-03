@@ -4,8 +4,8 @@
 
 class asdf (
   String[1] $path = '/opt/asdf',
-  String[1] $owner = $facts['id'],
-  String[1] $group = $facts['gid'],
+  Variant[String[1], Integer] $owner = $facts['id'],
+  Variant[String[1], Integer] $group = $facts['gid'],
   String[1] $repo = 'https://github.com/asdf-vm/asdf',
   Hash[String[1], Hash] $plugins = {},
   Hash[String[1], Hash] $versions = {}
