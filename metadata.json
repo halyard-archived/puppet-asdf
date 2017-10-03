@@ -1,6 +1,6 @@
 {
   "name": "halyard-asdf",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "Les Aker",
   "license": "MIT",
   "summary": "Configure asdf",
