@@ -3,13 +3,13 @@ my_json = JSON.parse(File.read('metadata.json'))
 my_slug = my_json['source'].split('/').pop(2).join('/')
 
 Prospectus.extra_dep('file', 'prospectus_puppet')
-Prospectus.extra_dep('file', 'prospectus_circleci')
+Prospectus.extra_dep('file', 'prospectus_travis')
 Prospectus.extra_dep('file', 'prospectus_gems')
 
 item do
   noop
 
-  extend ProspectusCircleci::Build.new(my_slug)
+  extend ProspectusTravis::Build.new(my_slug)
   extend ProspectusPuppet::Deps
   extend ProspectusGems::Gemspec.new
 end
