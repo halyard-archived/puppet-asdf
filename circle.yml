@@ -1,6 +1,0 @@
-dependencies:
-  override:
-  - 'for i in $(cat .circle-ruby) ; do rvm-exec $i bundle install || exit 1 ; done'
-test:
-  override:
-  - 'for i in $(cat .circle-ruby) ; do rvm-exec $i bundle exec rake test || exit 1 ; done'
