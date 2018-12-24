@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'pdk', '~> 1.8.0'
 gem 'puppet', '~> 6.1.0'
 gem 'puppet-lint', '~> 2.3.0'
 gem 'puppet-blacksmith', '~> 4.1.0'
