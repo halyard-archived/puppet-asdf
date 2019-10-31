@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'pdk-akerl', '~> 1.9.1.1'
+gem 'pdk-akerl', '~> 1.14.0.1'
 gem 'puppet', '~> 6.10.1'
 gem 'puppet-lint', '~> 2.4.1'
 gem 'puppet-blacksmith', '~> 5.0.0'
