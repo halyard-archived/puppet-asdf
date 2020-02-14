@@ -1,3 +1,5 @@
+**Deprecation Notice:** I'm in the process of revamping my puppet work, this repo is currently not up to date.
+
 puppet-asdf
 ===========
 
